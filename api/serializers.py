@@ -8,4 +8,4 @@ class CheckListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CheckList
-        fields = ['site', 'notification', 'owner', 'id']
+        fields = ['name', 'site', 'notification', 'owner', 'id']

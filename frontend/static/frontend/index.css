@@ -1,0 +1,35 @@
+ul {
+  width: 50%;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+li {
+  background-color: grey;
+  margin-bottom: 15px;
+  min-width: 400px;
+}
+
+.settings-form {
+  background-color: lightgrey;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+
+button {
+  float: right;
+  margin: 10px;
+}
+
+
+p {
+  margin: 10px;
+  display: inline-block;
+}
+
+input {
+  margin: 10px;
+}
+
