@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SiteItem from "./SiteItem";
+import AddSiteForm from "./AddSiteForm";
 
 
 function getCookie(name) {
@@ -32,14 +33,17 @@ class ListSites extends Component {
 
     render() {
         return (
-          <ul>
-              {this.state.data.map((item, index) => {
-                  return <SiteItem siteItem={item}
-                                   key={index}
-                                   onDelete={() => this.handleClickDeleteItem(item.id, index)}
-                                   onUpdate={() => this.handleClickUpdateItem(item.id, index)}/>;
-              })}
-          </ul>
+            <div>
+                <ul>
+                  {this.state.data.map((item, index) => {
+                      return <SiteItem siteItem={item}
+                                       key={item.id}
+                                       onDelete={() => this.handleClickDeleteItem(item.id, index)}
+                                       onUpdate={() => this.handleClickUpdateItem(item.id, index)}/>;
+                  })}
+              </ul>
+                <AddSiteForm onAdd={() => this.handleClickAddSite()}/>
+            </div>
         );
     }
 
@@ -76,6 +80,25 @@ class ListSites extends Component {
             .then((siteItem) => {
                 let data = this.state.data.slice();
                 data[key] = siteItem;
+                this.setState(() => {
+                    return {data: data};
+                });
+            });
+    }
+
+    handleClickAddSite() {
+        let formSite = document.getElementById('adding-form');
+        let formData = new FormData(formSite);
+        formData.set('notification', String((formData.get('notification') === 'on')));
+        fetch('api/check-list/', {
+            method: 'POST',
+            body: formData,
+            headers: {'Access-Control-Allow-Methods': 'PUT', 'X-CSRFTOKEN': getCookie('csrftoken')},
+            credentials: 'include'})
+          .then((response) => response.json())
+            .then((siteItem) => {
+                let data = this.state.data.slice();
+                data.push(siteItem);
                 this.setState(() => {
                     return {data: data};
                 });

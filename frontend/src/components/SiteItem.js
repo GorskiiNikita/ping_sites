@@ -16,7 +16,7 @@ class SiteItem extends Component {
                 <p>{this.props.siteItem.name}</p>
                 <button className="settings-btn" onClick={() => this.handleClickHiddenForm(this.state.formId)}>Параметры</button>
                 <button className="delete-btn" onClick={this.props.onDelete}>Удалить</button>
-                <form className="settings-form" hidden id={this.state.formId}
+                <form className="settings-form" hidden id={this.state.formId} method="POST"
                       onSubmit={(e) => {this.props.onUpdate(); e.preventDefault();}}>
                     <label>Название: <input type="text" defaultValue={this.props.siteItem.name} name="name"/></label>
                     <br />
