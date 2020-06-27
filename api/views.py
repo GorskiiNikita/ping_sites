@@ -15,9 +15,8 @@ class CheckListViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
-        # Сохранить соответствующий сайт из sites
-        # Если там такого сайта нет - создать и тогда сохранить его
-        site = Site.objects.all()[0]
+        site_url = self.request.POST['site']
+        site, created = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
 
     def list(self, request, *args, **kwargs):
