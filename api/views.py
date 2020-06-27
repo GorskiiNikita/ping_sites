@@ -6,6 +6,8 @@ from api.permissions import IsOwner
 from api.serializers import CheckListSerializer
 from rest_framework import viewsets
 
+from .models import Site
+
 
 class CheckListViewSet(viewsets.ModelViewSet):
     queryset = CheckList.objects.all()
@@ -13,7 +15,10 @@ class CheckListViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        # Сохранить соответствующий сайт из sites
+        # Если там такого сайта нет - создать и тогда сохранить его
+        site = Site.objects.all()[0]
+        serializer.save(owner=self.request.user, site=site)
 
     def list(self, request, *args, **kwargs):
         queryset = CheckList.objects.filter(owner=request.user)
