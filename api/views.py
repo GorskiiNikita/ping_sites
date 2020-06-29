@@ -19,6 +19,11 @@ class CheckListViewSet(viewsets.ModelViewSet):
         site, created = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
 
+    def perform_update(self, serializer):
+        site_url = self.request.POST['site']
+        site, created = Site.objects.get_or_create(site_url=site_url)
+        serializer.save(owner=self.request.user, site=site)
+
     def list(self, request, *args, **kwargs):
         queryset = CheckList.objects.filter(owner=request.user)
         serializer = CheckListSerializer(queryset, many=True)
