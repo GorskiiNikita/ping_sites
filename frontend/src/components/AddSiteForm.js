@@ -12,7 +12,7 @@ class AddSiteForm extends Component {
                   }}>
                 <label>Название: <input type="text" name="name" size="25" required id="add-site-name"/></label>
                 <br />
-                <label>Адрес сайта: <input type="text" name="site" size="25" required id="add-site-url"/></label>
+                <label>Адрес сайта: <input type="url" name="site" size="25" required id="add-site-url"/></label>
                 <br />
                 <label>Уведомления: <input type="checkbox" name="notification" id="add-site-notification"/></label>
                 <button>Добавить</button>
