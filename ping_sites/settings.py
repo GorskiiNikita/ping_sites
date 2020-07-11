@@ -134,8 +134,6 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
 
 
-
-
 try:
     from .local_settings import *
 except ImportError:

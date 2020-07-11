@@ -1,3 +1,5 @@
+import json
+
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -20,10 +22,11 @@ class CheckListViewSet(viewsets.ModelViewSet):
         site, created = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
         if created:
-            schedule, created = IntervalSchedule.objects.get_or_create(every=5, period=IntervalSchedule.SECONDS)
+            schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.SECONDS)
             PeriodicTask.objects.create(interval=schedule,
                                         task='api.tasks.ping_site',
-                                        name=f'id{site.site_id}')
+                                        name=f'id{site.site_id}',
+                                        args=json.dumps([site.site_id]))
 
     def perform_update(self, serializer):
         site_url = self.request.POST['site']
