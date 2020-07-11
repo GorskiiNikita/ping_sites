@@ -16,8 +16,7 @@ def ping_site(site_id):
 
     if is_active != site.is_active:
         site.is_active = is_active
-
-    site.save(update_fields=['is_active'])
+        site.save(update_fields=['is_active'])
 
     if is_active:
         return f'site {site.site_url} is running'
