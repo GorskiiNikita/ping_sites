@@ -6,7 +6,7 @@ class SiteItem extends Component {
         super(props);
         this.state = {
             siteId: this.props.siteId,
-            formId: 'siteForm' + this.props.siteItem.id,
+            formId: 'siteForm' + this.props.siteItem.id
         };
     }
 
