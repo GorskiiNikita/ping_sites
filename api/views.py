@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Count
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -32,6 +33,16 @@ class CheckListViewSet(viewsets.ModelViewSet):
         site_url = self.request.POST['site']
         site, created = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
+
+    def perform_destroy(self, instance):
+        site = Site.objects.get(site_id=instance.site.site_id)
+        list_checks = CheckList.objects.filter(site__site_id=site.site_id)
+
+        if len(list_checks) <= 1:
+            site.delete()
+            PeriodicTask.objects.get(name=f'id{instance.site.site_id}').delete()
+
+        instance.delete()
 
     def list(self, request, *args, **kwargs):
         queryset = CheckList.objects.filter(owner=request.user)
