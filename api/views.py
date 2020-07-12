@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from api.models import CheckList
 from api.permissions import IsOwner
 from api.serializers import CheckListSerializer
+from api.tasks import ping_site
 from rest_framework import viewsets
 
 from .models import Site
@@ -20,14 +21,15 @@ class CheckListViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         site_url = self.request.POST['site']
-        site, created = Site.objects.get_or_create(site_url=site_url)
+        site, created_site = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
-        if created:
-            schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.SECONDS)
+        if created_site:
+            schedule, created_schedule = IntervalSchedule.objects.get_or_create(every=30, period=IntervalSchedule.SECONDS)
             PeriodicTask.objects.create(interval=schedule,
                                         task='api.tasks.ping_site',
                                         name=f'id{site.site_id}',
                                         args=json.dumps([site.site_id]))
+            ping_site.delay(site.site_id)
 
     def perform_update(self, serializer):
         site_url = self.request.POST['site']
