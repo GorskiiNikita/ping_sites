@@ -24,7 +24,7 @@ class CheckListViewSet(viewsets.ModelViewSet):
         site, created_site = Site.objects.get_or_create(site_url=site_url)
         serializer.save(owner=self.request.user, site=site)
         if created_site:
-            schedule, created_schedule = IntervalSchedule.objects.get_or_create(every=30, period=IntervalSchedule.SECONDS)
+            schedule, created_schedule = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.SECONDS)
             PeriodicTask.objects.create(interval=schedule,
                                         task='api.tasks.ping_site',
                                         name=f'id{site.site_id}',
