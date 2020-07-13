@@ -14,7 +14,7 @@ class SiteItem extends Component {
         return (
             <li>
                 <p>{this.props.siteItem.name}
-                    <span style={{color: this.props.siteItem.is_active ? 'PaleGreen' : 'LightCoral'}}>
+                    <span style={{color: this.props.siteItem.is_active ? '#0dff0d' : '#e61212'}}>
                         {this.props.siteItem.is_active ? 'Работает' : 'Не рабоает'}
                     </span>
                 </p>
