@@ -14,7 +14,7 @@ class AddSiteForm extends Component {
                 <br />
                 <label>Адрес сайта: <input type="url" name="site" size="25" required id="add-site-url"/></label>
                 <br />
-                <label>Уведомления: <input type="checkbox" name="notification" id="add-site-notification"/></label>
+                <label>Уведомления: <input type="checkbox" name="notification" id="add-site-notification" defaultChecked={true}/></label>
                 <button>Добавить</button>
             </form>
         )

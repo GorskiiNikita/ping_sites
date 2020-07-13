@@ -13,7 +13,11 @@ class SiteItem extends Component {
     render() {
         return (
             <li>
-                <p>{this.props.siteItem.name}</p>
+                <p>{this.props.siteItem.name}
+                    <span style={{color: this.props.siteItem.is_active ? 'PaleGreen' : 'LightCoral'}}>
+                        {this.props.siteItem.is_active ? 'Работает' : 'Не рабоает'}
+                    </span>
+                </p>
                 <button className="settings-btn" onClick={() => this.handleClickHiddenForm(this.state.formId)}>Параметры</button>
                 <button className="delete-btn" onClick={this.props.onDelete}>Удалить</button>
                 <form className="settings-form" hidden id={this.state.formId} method="POST"
