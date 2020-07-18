@@ -1,7 +1,10 @@
 import json
 
-from django.db.models import Count
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -50,5 +53,17 @@ class CheckListViewSet(viewsets.ModelViewSet):
         queryset = CheckList.objects.filter(owner=request.user)
         serializer = CheckListSerializer(queryset, many=True)
         return Response({'data': serializer.data[::-1]})
+
+
+@api_view(['POST'])
+def login_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect('/')
+    else:
+        return Response({'status': 'error', 'text': 'Неправильный логин или пароль'}, 401)
 
 

@@ -9,4 +9,5 @@ router.register(r'check-list', views.CheckListViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+    path('login', views.login_user)
 ]
