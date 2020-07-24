@@ -23,7 +23,7 @@ class ListSites extends Component {
         this.updateData();
         this.timerID = setInterval(
             () => this.updateData(),
-            300000
+            8000
         );
     }
 
@@ -72,9 +72,9 @@ class ListSites extends Component {
         let formData = new FormData(formSite);
         formData.set('notification', String((formData.get('notification') === 'on')));
         fetch('api/check-list/' + i + '/', {
-            method: 'PUT',
+            method: 'PATCH',
             body: formData,
-            headers: {'Access-Control-Allow-Methods': 'PUT', 'X-CSRFTOKEN': getCookie('csrftoken')},
+            headers: {'Access-Control-Allow-Methods': 'PATCH', 'X-CSRFTOKEN': getCookie('csrftoken')},
             credentials: 'include'})
           .then((response) => response.json())
             .then((siteItem) => {
@@ -93,7 +93,7 @@ class ListSites extends Component {
         fetch('api/check-list/', {
             method: 'POST',
             body: formData,
-            headers: {'Access-Control-Allow-Methods': 'PUT', 'X-CSRFTOKEN': getCookie('csrftoken')},
+            headers: {'Access-Control-Allow-Methods': 'POST', 'X-CSRFTOKEN': getCookie('csrftoken')},
             credentials: 'include'})
           .then((response) => response.json())
             .then((siteItem) => {

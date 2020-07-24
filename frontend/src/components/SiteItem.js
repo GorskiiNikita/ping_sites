@@ -6,14 +6,18 @@ class SiteItem extends Component {
         super(props);
         this.state = {
             siteId: this.props.siteId,
-            formId: 'siteForm' + this.props.siteItem.id,
+            formId: 'siteForm' + this.props.siteItem.id
         };
     }
 
     render() {
         return (
             <li>
-                <p>{this.props.siteItem.name}</p>
+                <p>{this.props.siteItem.name}
+                    <span style={{color: this.props.siteItem.is_active ? '#0dff0d' : '#e61212'}}>
+                        {this.props.siteItem.is_active ? 'Работает' : 'Не рабоает'}
+                    </span>
+                </p>
                 <button className="settings-btn" onClick={() => this.handleClickHiddenForm(this.state.formId)}>Параметры</button>
                 <button className="delete-btn" onClick={this.props.onDelete}>Удалить</button>
                 <form className="settings-form" hidden id={this.state.formId} method="POST"
