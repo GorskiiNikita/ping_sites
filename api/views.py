@@ -52,7 +52,7 @@ class CheckListViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         queryset = CheckList.objects.filter(owner=request.user)
         serializer = CheckListSerializer(queryset, many=True)
-        return Response({'data': serializer.data})
+        return Response({'data': serializer.data[::-1]})
 
 
 @api_view(['POST'])
