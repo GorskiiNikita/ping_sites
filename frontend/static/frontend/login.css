@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+.auth-form {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: lightgrey;
+  width: 400px;
+  padding: 20px;
+}
+
+
+input {
+   margin-bottom: 15px;
+}
